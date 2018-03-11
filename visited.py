@@ -1,4 +1,4 @@
-#!/usr/bin/php -f
+#!/usr/bin/python -f
 import Pyro4
 control = Pyro4.Proxy("PYRONAME:example.control");
 
