@@ -16,10 +16,7 @@ var draw_partical;
   createCanvas(scanner_canvas_extents[0],scanner_canvas_extents[1]);
   fill('black');
   rect(0,0,596,600,20);
-  //getData()
-
-    //getData();
-}
+ }
 
 function draw(){
   //background(255);
