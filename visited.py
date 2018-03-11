@@ -1,0 +1,10 @@
+#!/usr/bin/php -f
+import Pyro4
+control = Pyro4.Proxy("PYRONAME:example.control");
+
+node_visited = control.getVisistedSet()
+node_env = control.getObstacleSet()
+##goal = control.get_Goal()
+print(node_visited);
+print("second");
+print(node_env);
