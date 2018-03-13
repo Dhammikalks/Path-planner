@@ -199,3 +199,11 @@ function path_draw(path_data,x_base,y_base){
                     }
 };
 //...............................................................
+function mousePressed() {
+  var x = mouseX;
+  var y = mouseY;
+
+  print(x);
+  print(y);
+}
+//...............................................................
