@@ -11,17 +11,17 @@ var draw_scan;
 var draw_cylinders;
 var draw_partical;
 
-
  function setup() {
   createCanvas(scanner_canvas_extents[0],scanner_canvas_extents[1]);
   fill('black');
   rect(0,0,596,600,20);
+  getData();
  }
 
 function draw(){
   //background(255);
   //print("geting Data")
- getData();
+
  //clear();
  }
 
@@ -29,12 +29,12 @@ function draw_Data(data) {
   //..................................................potential
   var env = data.data.env_nodes;
   var draw_potential = new potential_draw(env,canvas_extents,world_extents);
-  draw_potential.draw();
+  //draw_potential.draw();
 
   //..................................................visited
   var visited = data.data.visited_nodes;
   var draw_visited = new visited_draw(visited,canvas_extents,world_extents);
-  draw_visited.draw();
+  //draw_visited.draw();
 
   //.................................................scan_data
   var path_data = data.data.path_data;
@@ -43,19 +43,19 @@ function draw_Data(data) {
   var y_base = data.data.y_base;
 
   draw_path = new path_draw(path_data,x_base,y_base);
-  draw_path.draw();
+  //draw_path.draw();
 
   //.................................................cylinders
   var cylinders = data.data.obstacle;
   if(cylinders){
       //print(cylinders);
       draw_cylinders = new cylinder_draw(cylinders,canvas_extents,world_extents);
-      draw_cylinders.draw();
+      //draw_cylinders.draw();
                }
   //..................................................position
   var postion = data.data.position;
   var position = new position_draw(postion,canvas_extents,world_extents);
-  position.draw();
+  //position.draw();
   //..................................................Goal
   var g = data.data.goal;
   var g1 =split(g,'(');
@@ -63,7 +63,7 @@ function draw_Data(data) {
   var goal =split(g2[0],',');
 
   var Goal = new goal_draw(goal,canvas_extents,world_extents);
-  Goal.draw();
+  //Goal.draw();
 }
 function getData(){
   loadJSON("results.json", draw_Data);
@@ -202,8 +202,17 @@ function path_draw(path_data,x_base,y_base){
 function mousePressed() {
   var x = mouseX;
   var y = mouseY;
+  var new_goal = [x,y];
 
-  print(x);
-  print(y);
+    $.ajax({
+                     type: "POST",
+                     url: 'http:/localhost/logtime.php',
+                     data: { X_post :x,Y_post : y},
+                     success: function(data)
+                     {
+                      print("sucess!");
+                     }
+
+                 });
 }
 //...............................................................
