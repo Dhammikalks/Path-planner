@@ -25,7 +25,7 @@ function draw(){
 function getData(){
   $.ajax({
                    type: "POST",
-                   url: 'http:/localhost/test.php',
+                   url: 'http:/localhost/planner.php',
                    data: { new :1},
                    success: function(data)
                    {
