@@ -10,11 +10,14 @@ define('DB_NAME','ROBOT');
 
 //get connection
 #........................$nodes = explode('second',trim($node));
-$node =  shell_exec('python ./visited.py');
-$nodes = explode('second',trim($node));
+$nodes =  shell_exec('python ./visited.py');
 
-$visited = $nodes[0];
-$env = $nodes[1];
+#$nodes = explode('second',trim($node));
+
+#$visited = $nodes[0];
+#$env = $nodes[1];
+
+echo $nodes;
 #.......................
 
 $conn =new mysqli(DB_HOST,DB_USERNAME, DB_PASSWORD,DB_NAME);
@@ -58,8 +61,7 @@ if($result){
   //................creating json object...................
 	$data_con = array('path_data'=>$path_coordinate,
 	                          'obstacle'=>$cylinder_list,
-														'visited_nodes'=>$visited,
-														'env_nodes'=>$env,
+														'visited_nodes'=>$nodes,
 														'position'=>$position,
 														'goal'=>$goal,
 														'X_base'=>$xbase,
