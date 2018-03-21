@@ -2,9 +2,7 @@
 import Pyro4
 control = Pyro4.Proxy("PYRONAME:example.control");
 
-node_visited = control.getVisistedSet()
-node_env = control.getObstacleSet()
+nodes = control.get_Vector()
 
-print(node_visited);
-print("second");
-print(node_env);
+print(nodes);
+
