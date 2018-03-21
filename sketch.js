@@ -10,31 +10,52 @@ var trajectroy = [];
 var draw_scan;
 var draw_cylinders;
 var draw_partical;
-
-
+//.............................................................setup
  function setup() {
   createCanvas(scanner_canvas_extents[0],scanner_canvas_extents[1]);
   fill('black');
   rect(0,0,596,600,20);
+  //getData();
  }
-
+//.............................................................draw
 function draw(){
-  //background(255);
-  //print("geting Data")
- getData();
- //clear();
- }
+  getData();
+}
+ //............................................................get_Data
+function getData(){
+  $.ajax({
+                   type: "POST",
+                   url: 'http:/localhost/planner.php',
+                   data: { new :1},
+                   success: function(data)
+                   {
+                     print(data);
+                     var obj = JSON.parse(data);
+                     //print(obj.data);
+                     draw_Data(obj);
+                     //loadJSON(data, draw_Data);
+                    }
 
+               });
+  //loadJSON("results.json", draw_Data);
+}
+//.............................................................draw
 function draw_Data(data) {
+  //..................................................env
+  var env = data.data.visited_nodes;
+  if(env){
+    var draw_env = new env_draw(env,canvas_extents,world_extents);
+    draw_env.draw();
+  }
   //..................................................potential
-  var env = data.data.env_nodes;
-  var draw_potential = new potential_draw(env,canvas_extents,world_extents);
-  draw_potential.draw();
+  //var env = data.data.env_nodes;
+  //var draw_potential = new potential_draw(env,canvas_extents,world_extents);
+  //draw_potential.draw();
 
   //..................................................visited
-  var visited = data.data.visited_nodes;
-  var draw_visited = new visited_draw(visited,canvas_extents,world_extents);
-  draw_visited.draw();
+  //var visited = data.data.visited_nodes;
+  //var draw_visited = new visited_draw(visited,canvas_extents,world_extents);
+  //draw_visited.draw();
 
   //.................................................scan_data
   var path_data = data.data.path_data;
@@ -64,9 +85,6 @@ function draw_Data(data) {
 
   var Goal = new goal_draw(goal,canvas_extents,world_extents);
   Goal.draw();
-}
-function getData(){
-  loadJSON("results.json", draw_Data);
 }
 //.............................................................draw_goal
 function goal_draw(goal,canvas_extents,world_extents){
@@ -106,7 +124,45 @@ function potential_draw(potential_array,canvas_extents,world_extents){
                   }
                 }
 };
+//.............................................................draw_env
+function env_draw(env_array,canvas_extents,world_extents){
+  //this.postion = postion;
+  this.canvas = canvas_extents;
+  this.world = world_extents;
 
+   var v = split(env_array,'[[[');
+   var v1 = split(v[1],']]]');
+   this.env =split(v1[0],']], [[');
+   this.radius = 4;
+   this.array_size = [200,200];
+
+   this.draw = function()
+                 {
+                   for(var i = 0; i < this.array_size[0];i++){
+                     var env_a = split(this.env[i],'], [');
+                     for(var j = 0; j < this.array_size[1];j++){
+                       var e = split(env_a[j],',');
+
+                       if(e[1]>1)
+                          {
+                         fill([0,0,e[1]]);
+                         noStroke();
+                         ellipse(i*3,canvas_extents[1]-j*3,this.radius,this.radius);
+                         }
+
+                       if(e[0]>1)
+                          {
+                          fill([0,e[0],0]);
+                          noStroke();
+                          ellipse(i*3,canvas_extents[1]-j*3,this.radius,this.radius);
+                           }
+
+                     }
+                   }
+                 }
+
+
+};
 //.............................................................draw_position
 function visited_draw(visited_array,canvas_extents,world_extents){
   //this.postion = postion;
@@ -198,4 +254,21 @@ function path_draw(path_data,x_base,y_base){
                   stroke(0);
                     }
 };
+//.............................................................mose actions
+function mousePressed() {
+  var x = mouseX;
+  var y = mouseY;
+  var new_goal = [x,y];
+
+    $.ajax({
+                     type: "POST",
+                     url: 'http:/localhost/control.php',
+                     data: { X_post :x,Y_post : y},
+                     success: function(data)
+                     {
+                      print("sucess!");
+                     }
+
+                 });
+}
 //...............................................................
