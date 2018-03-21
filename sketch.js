@@ -262,7 +262,7 @@ function mousePressed() {
 
     $.ajax({
                      type: "POST",
-                     url: 'http:/localhost/logtime.php',
+                     url: 'http:/localhost/control.php',
                      data: { X_post :x,Y_post : y},
                      success: function(data)
                      {
