@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import Pyro4
+import  Pyro4
 import sys
 
 person_to_joke = sys.argv[1]
