@@ -14,7 +14,7 @@ if(isset($_POST['new']))
           define('DB_NAME','ROBOT');
           //get connection
           #........................$nodes = explode('second',trim($node));
-          $nodes =  shell_exec('python ./visited.py');
+          $nodes =  shell_exec('./visited.py  2>&1');
           #.......................
 
           $conn =new mysqli(DB_HOST,DB_USERNAME, DB_PASSWORD,DB_NAME);

@@ -1,4 +1,4 @@
-#!/usr/bin/python -f
+#!/usr/bin/env python3
 import Pyro4
 import sys,json
 
@@ -14,4 +14,3 @@ control = Pyro4.Proxy("PYRONAME:example.control");
 control.set_Goal(pos);
 
 print("sucess !");
-
