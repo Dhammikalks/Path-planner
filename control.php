@@ -5,8 +5,9 @@ if(isset($_POST['X_post']))
     $y = $_POST['Y_post'];
 
     $pos = [$x,$y];
-  $result =  shell_exec('./goal.py '.escapeshellarg(json_encode($pos)) . ' 2>&1');
-   // Do whatever you want with the $uid
-echo $results;
+    $result =  shell_exec('./goal.py 2>&1 '.escapeshellarg(json_encode($pos)));
+
+   // Do whatever you want with the $uid
+echo $result;
 }
 ?>
