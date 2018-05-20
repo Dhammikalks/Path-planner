@@ -1,7 +1,8 @@
 <?php
+
 if(isset($_POST['new']))
 {
-    $n = $_POST['new'];
+   $n = $_POST['new'];
     if($n) // asking for new data
 	{
 	  //seting header to json
@@ -14,9 +15,9 @@ if(isset($_POST['new']))
           define('DB_NAME','ROBOT');
           //get connection
           #........................$nodes = explode('second',trim($node));
-          $nodes =  shell_exec('python ./visited.py');
+          $nodes =  shell_exec('./visited.py 2>&1');
           #.......................
-
+          #echo $nodes;
           $conn =new mysqli(DB_HOST,DB_USERNAME, DB_PASSWORD,DB_NAME);
 
           if(!$conn){
